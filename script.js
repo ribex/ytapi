@@ -1,25 +1,36 @@
 /*global ytapikey $*/
 /*global config */
+var myKey = config.ytapikey;
 
 $(document).ready(function() {
-
-    // var myKey = config.ytapikey;
 
     $('#searchYouTube').submit(function(event) {
         event.preventDefault();
         var query = $('#query').val();
         var url = 'https://www.googleapis.com/youtube/v3/search';
         var data = {
-            key: ytapikey, 
+            key: myKey, 
             part: 'snippet',
             q: query
         };
         $.ajax({
             url: url,
             data: data,
-            type: "GET",
+            type: 'GET',
             success: function(response) {
-                console.log(response);
+                // console.log(response);
+                var items = response.items;
+                // console.log(items);
+                var html = '<ul class="list-group">';
+                $.each(items, function(index, item) {
+                    // var item = items[index]
+                    // console.log(item.snippet.title);
+                    html += '<li class="list-group-item">' + item.snippet.title + '</li>';
+                    
+                });
+                html += '</ul>';
+                
+                $('#results').html(html);
             }
         });
     });
