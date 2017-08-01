@@ -1,22 +1,27 @@
+/*global ytapikey $*/
+/*global config */
+
 $(document).ready(function() {
 
-    var myKey = config.ytapikey;
+    // var myKey = config.ytapikey;
 
-
-
-    $("#source").submit(function(event) {
+    $('#searchYouTube').submit(function(event) {
         event.preventDefault();
-        var id = $('#sourceId').val();
-        var url = "https://newsapi.org/v1/articles";
-        var data = {source: id, apiKey: myKey, sortBy: "top"};
+        var query = $('#query').val();
+        var url = 'https://www.googleapis.com/youtube/v3/search';
+        var data = {
+            key: ytapikey, 
+            part: 'snippet',
+            q: query
+        };
         $.ajax({
             url: url,
             data: data,
             type: "GET",
             success: function(response) {
-;
+                console.log(response);
             }
-        })
+        });
     });
 
 
